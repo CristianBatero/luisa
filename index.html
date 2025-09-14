@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <link rel="icon" type="image/png" href="cris.png">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Amor y Amistad ❤️</title>
+  
+  <meta name="description" content="Una página especial de amistad para Luisa."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0f0f12;
+      --card:#19191f;
+      --soft:#24242c;
+      --txt:#e9e9ef;
+      --muted:#a9a9b8;
+      --accent:#ffd166; /* Amarillo cálido */
+      --accent-2:#ffe27a; /* Amarillo más claro */
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;}
+    body{
+      margin:0; color:var(--txt); background:radial-gradient(1200px 600px at 20% -10%, #1b1b22 0%, #0f0f12 55%), #0b0b0e;
+      font-family:Poppins, sans-serif;
+      overflow-x:hidden;
+    }
+    #hearts{position:fixed; inset:0; z-index:-1; filter:drop-shadow(0 8px 8px rgba(0,0,0,.25));}
+    .container{max-width:900px; margin:0 auto; padding:24px;}
+    header.hero{padding:96px 16px 48px; text-align:center}
+    header h1{font-family:"Playfair Display", serif; font-weight:700; font-size:clamp(32px,6vw,58px); margin:18px 0;}
+    header h1 .gradient{background:linear-gradient(90deg, var(--accent), #fff6a3, var(--accent-2)); -webkit-background-clip:text; background-clip:text; color:transparent}
+    header p.sub{max-width:680px; margin:0 auto; color:var(--muted); font-size:clamp(14px,2.4vw,18px)}
+    section{padding:32px 16px}
+    section h2{font-family:"Playfair Display", serif; font-size:clamp(24px,4vw,40px); margin:0 0 14px; color:var(--accent)}
+    .card{background:linear-gradient(180deg, #1a1a21, #121218); border:1px solid #2a2a33; padding:24px; border-radius:20px; box-shadow:0 6px 18px rgba(0,0,0,.25)}
+    .big{font-size:22px; font-weight:500; line-height:1.6; white-space:pre-line}
+    footer{padding:40px 16px 60px; text-align:center; color:var(--accent)}
+    .type{font-size:clamp(18px,3.6vw,24px); color:var(--accent-2); min-height:32px; text-align:center}
+  </style>
+</head>
+<body>
+  <canvas id="hearts" aria-hidden="true"></canvas>
+  <header class="hero container">
+    <h1>Querida <span id="herName" class="gradient">Luisa</span></h1>
+    <p class="sub">En este día de Amor y Amistad, quiero recordarte lo valiosa que eres para mí y cuánto aprecio nuestra amistad 💫</p>
+    <p class="type" id="typewriter" aria-live="polite"></p>
+  </header>
+
+  <main class="container">
+    <section aria-labelledby="mensaje-title">
+      <h2 id="mensaje-title">Un mensaje especial</h2>
+      <div class="card">
+        <p class="big">Mi Lu, espero que este día como cualquiera pero simbólicamente es para celebrar el amor y la amistad. Hoy me centraré en la amistad que últimamente no es como cuando empezamos, cambiaron muchas cosas, hemos crecido y lo importante es que puedo decir que somos amigos. Con una sonrisa en mi rostro puedo decirte: mi Lu, puedes contar conmigo y eso quiero que lo atesores, que aquí estaré para ti.
+
+Muchas actitudes las he cambiado y espero que sepas valorar lo mucho que me esfuerzo para no herir, y en especial a ti. 🌼</p>
+      </div>
+    </section>
+
+    <section aria-labelledby="razones-title">
+      <h2 id="razones-title">Razones por las que valoro tu amistad</h2>
+      <div class="card">
+        <ul id="razones" style="list-style: none; padding:0; margin:0; font-size:20px; line-height:1.6">
+          <li>✨ Siempre sabes cómo animar el día.</li>
+          <li>🌼 Escuchas con el corazón.</li>
+          <li>💫 Inspiras confianza y tranquilidad.</li>
+          <li>🌹 Eres auténtica y generosa.</li>
+          <li>🌟 Contigo, las pequeñas cosas se hacen grandes.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Con gratitud y cariño, <span id="myName">Cristian</span>
+  </footer>
+
+  <script>
+    const HER_NAME = "Luisa";
+    const MY_NAME = "Cristian";
+    document.getElementById('herName').textContent = HER_NAME;
+    document.getElementById('myName').textContent = MY_NAME;
+
+    const twLines = [
+      "Gracias por tu amistad sincera.",
+      "Tu apoyo es un regalo en mi vida.",
+      "Hoy celebro lo valiosa que eres para mí." 
+    ];
+    let twIdx = 0, twPos = 0, twDir = 1;
+    const tw = document.getElementById('typewriter');
+    function typeLoop(){
+      const str = twLines[twIdx];
+      tw.textContent = str.slice(0, twPos);
+      twPos += twDir;
+      if(twPos === str.length + 8) twDir = -1;
+      if(twPos === 0){ twDir = 1; twIdx = (twIdx+1)%twLines.length; }
+      setTimeout(typeLoop, twDir>0 ? 60 : 30);
+    }
+    typeLoop();
+
+    const c = document.getElementById('hearts');
+    const ctx = c.getContext('2d');
+    let W, H; const hearts=[]; const MAX=80;
+    function onResize(){ W= c.width = innerWidth; H= c.height= innerHeight; }
+    addEventListener('resize', onResize); onResize();
+    function makeHeart(){
+      const x = Math.random()*W; const y = H + Math.random()*H*0.2;
+      const s = 8 + Math.random()*18;
+      const vy = - (1 + Math.random()*1.8);
+      const vx = (Math.random()-.5)*.6; const rot = Math.random()*Math.PI; const vr = (Math.random()-.5)*.01;
+      const alpha = .3 + Math.random()*.6;
+      return {x,y,s,vy,vx,rot,vr,alpha};
+    }
+    function drawHeart(x,y,s,rot,alpha){
+      ctx.save(); ctx.translate(x,y); ctx.rotate(rot); ctx.scale(s/24, s/24); ctx.globalAlpha = alpha;
+      ctx.beginPath();
+      ctx.moveTo(0, -6);
+      for(let t=-Math.PI; t<=Math.PI; t+=Math.PI/30){
+        const px = 16*Math.pow(Math.sin(t),3);
+        const py = -(13*Math.cos(t) - 5*Math.cos(2*t) - 2*Math.cos(3*t) - Math.cos(4*t));
+        ctx.lineTo(px, py);
+      }
+      const grd = ctx.createLinearGradient(-12,-12,12,18);
+      grd.addColorStop(0, 'rgba(255,209,102,.95)');
+      grd.addColorStop(1, 'rgba(255,226,122,.75)');
+      ctx.fillStyle = grd; ctx.fill();
+      ctx.restore();
+    }
+    function loop(){
+      ctx.clearRect(0,0,W,H);
+      if(hearts.length < MAX && Math.random() < .6) hearts.push(makeHeart());
+      for(let i=hearts.length-1; i>=0; i--){
+        const h=hearts[i];
+        h.x+=h.vx; h.y+=h.vy; h.rot+=h.vr; h.alpha*=0.999;
+        drawHeart(h.x,h.y,h.s,h.rot,h.alpha);
+        if(h.y < -40 || h.alpha < 0.05) hearts.splice(i,1);
+      }
+      requestAnimationFrame(loop);
+    }
+    loop();
+  </script>
+</body>
+</html>
